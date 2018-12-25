@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {createStore} from "./index";
+import {createStore} from './index';
 
 describe('State Machine tests', function () {
 
@@ -78,7 +78,7 @@ describe('State Machine tests', function () {
     it('simple actions #1', function () {
       const store = createStore({counter: 1}, {
         inc(state, increment) {
-          return {counter: state.counter + increment || 1}
+          return {counter: state.counter + increment || 1};
         }
       });
 

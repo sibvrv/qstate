@@ -1,5 +1,11 @@
+/**
+ * Action Callback Type
+ */
 type ActionFN<T> = (states: T, ...args: any[]) => any;
 
+/**
+ * Actions List
+ */
 interface StateMachineActions<T> {
   [funcName: string]: ActionFN<T>;
 }
@@ -48,6 +54,11 @@ export class StateMachine<States, Actions extends StateMachineActions<States>> {
     };
   }
 
+  /**
+   * Dispatch Event
+   * @param actionName
+   * @param args
+   */
   dispatch(actionName: string, ...args: any[]) {
     if (typeof this.actions[actionName] !== 'function') {
       throw new Error(`Missing action: ${actionName}`);
