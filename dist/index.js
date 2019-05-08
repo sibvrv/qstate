@@ -29,7 +29,7 @@ var StateMachine = /** @class */ (function () {
     StateMachine.prototype.set = function (state) {
         var _this = this;
         this.states = __assign({}, this.states, state);
-        this.listeners.forEach(function (l) { return l(_this); });
+        this.listeners.forEach(function (l) { return l(_this, state); });
     };
     /**
      * Retrieve the current state object.
@@ -53,6 +53,11 @@ var StateMachine = /** @class */ (function () {
             }
         };
     };
+    /**
+     * Dispatch Event
+     * @param actionName
+     * @param args
+     */
     StateMachine.prototype.dispatch = function (actionName) {
         var args = [];
         for (var _i = 1; _i < arguments.length; _i++) {

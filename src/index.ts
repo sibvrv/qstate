@@ -2,6 +2,7 @@
  * Action Callback Type
  */
 type ActionFN<T> = (states: T, ...args: any[]) => any;
+type ObserveFN<States, Actions extends StateMachineActions<States>> = (store: StateMachine<States, Actions>, newStates?: States) => any;
 
 /**
  * Actions List
@@ -14,7 +15,7 @@ interface StateMachineActions<T> {
  * State Machine
  */
 export class StateMachine<States, Actions extends StateMachineActions<States>> {
-  listeners: ((states: StateMachine<States, Actions>) => any)[] = [];
+  listeners: ObserveFN<States, Actions>[] = [];
 
   constructor(
     public states: States = {} as States,
@@ -28,7 +29,7 @@ export class StateMachine<States, Actions extends StateMachineActions<States>> {
    */
   set(state: States) {
     this.states = {...this.states, ...state};
-    this.listeners.forEach(l => l(this));
+    this.listeners.forEach(l => l(this, state));
   }
 
   /**

@@ -1,4 +1,11 @@
+/**
+ * Action Callback Type
+ */
 declare type ActionFN<T> = (states: T, ...args: any[]) => any;
+declare type ObserveFN<States, Actions extends StateMachineActions<States>> = (store: StateMachine<States, Actions>, newStates?: States) => any;
+/**
+ * Actions List
+ */
 interface StateMachineActions<T> {
     [funcName: string]: ActionFN<T>;
 }
@@ -8,7 +15,7 @@ interface StateMachineActions<T> {
 export declare class StateMachine<States, Actions extends StateMachineActions<States>> {
     states: States;
     actions: Actions;
-    listeners: ((states: StateMachine<States, Actions>) => any)[];
+    listeners: ObserveFN<States, Actions>[];
     constructor(states?: States, actions?: Actions);
     /**
      * Apply a partial state object to the current state, invoking registered listeners.
@@ -24,6 +31,11 @@ export declare class StateMachine<States, Actions extends StateMachineActions<St
      * @param listener
      */
     observe(listener: (states: StateMachine<States, Actions>) => any): () => void;
+    /**
+     * Dispatch Event
+     * @param actionName
+     * @param args
+     */
     dispatch(actionName: string, ...args: any[]): void;
 }
 /**

@@ -1,6 +1,6 @@
 {
   "name": "qstate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tiny State Machine written in TypeScript.",
   "author": "Roman Vereshchagin",
   "license": "MIT",
