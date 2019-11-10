@@ -5,11 +5,11 @@ describe('State Machine tests', function () {
 
   describe('basic', function () {
     it('set state #1', function () {
-      const store = createStore({});
+      const store = createStore({testA: 'simple text', test: 0});
       store.set({test: 1});
 
       const result = store.get();
-      expect(result).to.deep.equal({test: 1});
+      expect(result).to.deep.equal({testA: 'simple text', test: 1});
     });
 
     it('set state #2', function () {

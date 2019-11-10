@@ -2,7 +2,7 @@
  * Action Callback Type
  */
 type ActionFN<T> = (states: T, ...args: any[]) => any;
-type ObserveFN<States, Actions extends StateMachineActions<States>> = (store: StateMachine<States, Actions>, newStates?: States) => any;
+type ObserveFN<States, Actions extends StateMachineActions<States>> = (store: StateMachine<States, Actions>, newStates?: Partial<States>) => any;
 
 /**
  * Actions List
@@ -27,7 +27,7 @@ export class StateMachine<States, Actions extends StateMachineActions<States>> {
    * Apply a partial state object to the current state, invoking registered listeners.
    * @param state
    */
-  set(state: States) {
+  set(state: Partial<States>) {
     this.states = {...this.states, ...state};
     this.listeners.forEach(l => l(this, state));
   }
@@ -73,4 +73,5 @@ export class StateMachine<States, Actions extends StateMachineActions<States>> {
  * @param initialState
  * @param actions
  */
-export const createStore = <InitialState, Actions extends StateMachineActions<InitialState>>(initialState: InitialState, actions?: Actions) => new StateMachine(initialState, actions);
+export const createStore = <InitialState, Actions extends StateMachineActions<InitialState>>(initialState: InitialState, actions?: Actions) =>
+  new StateMachine(initialState, actions);

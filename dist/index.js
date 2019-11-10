@@ -10,6 +10,13 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * State Machine
@@ -28,7 +35,7 @@ var StateMachine = /** @class */ (function () {
      */
     StateMachine.prototype.set = function (state) {
         var _this = this;
-        this.states = __assign({}, this.states, state);
+        this.states = __assign(__assign({}, this.states), state);
         this.listeners.forEach(function (l) { return l(_this, state); });
     };
     /**
@@ -59,15 +66,15 @@ var StateMachine = /** @class */ (function () {
      * @param args
      */
     StateMachine.prototype.dispatch = function (actionName) {
+        var _a;
         var args = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             args[_i - 1] = arguments[_i];
         }
-        var _a;
         if (typeof this.actions[actionName] !== 'function') {
             throw new Error("Missing action: " + actionName);
         }
-        this.set((_a = this.actions)[actionName].apply(_a, [this.states].concat(args)) || {});
+        this.set((_a = this.actions)[actionName].apply(_a, __spreadArrays([this.states], args)) || {});
     };
     return StateMachine;
 }());
@@ -77,4 +84,6 @@ exports.StateMachine = StateMachine;
  * @param initialState
  * @param actions
  */
-exports.createStore = function (initialState, actions) { return new StateMachine(initialState, actions); };
+exports.createStore = function (initialState, actions) {
+    return new StateMachine(initialState, actions);
+};

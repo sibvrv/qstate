@@ -2,7 +2,7 @@
  * Action Callback Type
  */
 declare type ActionFN<T> = (states: T, ...args: any[]) => any;
-declare type ObserveFN<States, Actions extends StateMachineActions<States>> = (store: StateMachine<States, Actions>, newStates?: States) => any;
+declare type ObserveFN<States, Actions extends StateMachineActions<States>> = (store: StateMachine<States, Actions>, newStates?: Partial<States>) => any;
 /**
  * Actions List
  */
@@ -21,7 +21,7 @@ export declare class StateMachine<States, Actions extends StateMachineActions<St
      * Apply a partial state object to the current state, invoking registered listeners.
      * @param state
      */
-    set(state: States): void;
+    set(state: Partial<States>): void;
     /**
      * Retrieve the current state object.
      */
